@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="Christophe Lamperti">
+  <meta name="theme-color" content="#F4F4F4">
+  <title>Dial · Pull better espresso shots, faster</title>
+  <meta name="description" content="Dial is an espresso app for iPhone that learns your grinder and your bag, then tells you where to go next. Free, no account.">
+  <meta property="og:title" content="Dial">
+  <meta property="og:description" content="Pull better espresso shots, faster. Free on iPhone, no account.">
+  <meta property="og:image" content="https://dialespresso.app/apple-touch-icon.png">
+  <link rel="icon" href="/assets/favicon.png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+  <div class="ruler" aria-hidden="true"><div class="needle"></div></div>
+
+  <main>
+    <section class="hero">
+      <div class="wrap">
+        <img class="icon" src="/assets/icon.webp" alt="Dial's icon: a dial with a red dot" width="96" height="96">
+        <h1>Dial</h1>
+        <p class="tagline">Pull better espresso shots, faster.</p>
+        <a href="https://testflight.apple.com/join/yrKBnctM" class="download"><span>Download for iOS</span></a>
+        <p class="fine">Free. No account.</p>
+        <figure class="stage">
+          <div class="device">
+            <div class="frame">
+              <div class="bezel"><div class="screen">
+                <img class="on" src="/assets/shelf.webp" alt="The shelf: all your bags of coffee, in their real colours" width="860" height="1869" data-title="All your bags at a glance." data-sub="In their real colours, with the grind that worked and whether you liked it.">
+                <img src="/assets/prep.webp" alt="The grind dial, set where Dial recommends" width="860" height="1869" data-title="Stop guessing the grind." data-sub="Dial closes in on the right setting from your past shots, your taste, and what your other bags taught it." loading="lazy">
+                <img src="/assets/taste-dialed.webp" alt="The taste slider set to Dialed in" width="860" height="1869" data-title="A simple way to rate a shot." data-sub="One slider for how it tasted. Dial uses it to refine the next shot." loading="lazy">
+                <img src="/assets/pull.webp" alt="A shot in progress, weighed and timed on the scale" width="860" height="1869" data-title="Stop on the beep." data-sub="Pair an Acaia Lunar for automatic shot logging. It tracks the weight and the time, and a beep tells you when to stop." loading="lazy">
+                <img src="/assets/newbag.webp" alt="A new bag, filled in from the roaster" width="860" height="1869" data-title="A new bag in seconds." data-sub="Origin, process, roast level and more are already filled in. It even tells you when the bag needs to rest." loading="lazy">
+                <img src="/assets/roasters.webp" alt="The list of roasters" width="860" height="1869" data-title="48 US roasters, built in." data-sub="Their current coffees, ready to pick. You just add the roast date." loading="lazy">
+                <img src="/assets/bag.webp" alt="A bag's page with its shots" width="860" height="1869" data-title="Every dial, remembered." data-sub="Each bag keeps how it was dialed in and the shots that got it there, so you don't waste one next time you buy it." loading="lazy">
+              </div></div>
+            </div>
+          </div>
+          <figcaption>
+            <div class="caption" aria-live="polite">
+              <p class="title">All your bags at a glance.</p>
+              <p class="sub">In their real colours, with the grind that worked and whether you liked it.</p>
+            </div>
+            <div class="tour">
+              <button class="step prev" type="button" aria-label="Previous screen"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10 3.5 5.5 8l4.5 4.5"/></svg></button>
+              <div class="track" role="slider" tabindex="0" aria-label="Screen" aria-valuemin="1" aria-valuemax="7" aria-valuenow="1"><span class="mark"></span></div>
+              <button class="step next" type="button" aria-label="Next screen"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3.5 10.5 8 6 12.5"/></svg></button>
+            </div>
+          </figcaption>
+        </figure>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap">
+      <div>
+        <span>Made by <a href="https://lamperti.me" target="_blank" rel="noopener">Christophe Lamperti</a></span>
+        <nav><a href="/support">Support</a><a href="/privacy">Privacy</a><a href="mailto:hello@dialespresso.app">hello@dialespresso.app</a></nav>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,351 @@
+/* Dial · dialespresso.app
+
+   One column, three type sizes, one grid. The app's screens carry the
+   page; the only ornament is the dial's tick ruler, whose needle follows
+   the scroll. Phone, ticks and keys come from the app and its App Store
+   screenshots; the needle borrows the red dot of the icon.
+
+   The grid: every line height and every space is a multiple of 4 px, and
+   the spaces between blocks are multiples of 8. */
+
+:root {
+  --ground: #F4F4F4;                        /* neutral, not cream */
+  --ink:    #2B2621;
+  --ink2:   #66615A;
+  --hair:   rgba(43, 38, 33, .14);
+  --red:    #E2422B;
+
+  /* The type scale, size / line height. S for everything small, M for
+     the sentences, L for the name. */
+  --s: 15px;  --s-lh: 20px;
+  --m: 22px;  --m-lh: 28px;
+  --l: 96px;  --l-lh: 88px;
+
+  --unit: 8px;
+  --wrap: 1104px;
+  --gutter: 24px;
+
+  /* The phone, sized so it and its caption fit in one screen. */
+  --phone: min(76vw, 342px, calc((100vh - 232px) * .47));
+
+  color-scheme: light;
+}
+@supports (height: 100svh) {
+  :root { --phone: min(76vw, 342px, calc((100svh - 232px) * .47)); }
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html {
+  background: var(--ground);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: 'Barlow', -apple-system, system-ui, sans-serif;
+  font-size: var(--s);
+  line-height: var(--s-lh);
+  font-weight: 500;
+  color: var(--ink);
+  background: var(--ground);
+  overflow-x: hidden;
+}
+
+img { display: block; max-width: 100%; height: auto; }
+a { color: inherit; text-decoration: none; }
+button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+
+.wrap {
+  max-width: calc(var(--wrap) + 2 * var(--gutter));
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+
+/* ---------- The ruler ----------
+   The screenshots' tick row: a major tick every 60 px, five minor ones
+   between, never one over the other. Both start from the same x (--rx,
+   the page's centre, set by app.js). No band behind it: the page scrolls
+   under the ticks. */
+
+.ruler {
+  --major: rgba(43, 38, 33, .26);
+  --minor: rgba(43, 38, 33, .13);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  height: 16px;
+  background-image:
+    linear-gradient(90deg, var(--major) 1px, transparent 1px),
+    linear-gradient(90deg, transparent 10px, var(--minor) 10px, var(--minor) 11px, transparent 11px, transparent 20px, var(--minor) 20px, var(--minor) 21px, transparent 21px, transparent 30px, var(--minor) 30px, var(--minor) 31px, transparent 31px, transparent 40px, var(--minor) 40px, var(--minor) 41px, transparent 41px, transparent 50px, var(--minor) 50px, var(--minor) 51px, transparent 51px);
+  background-size: 60px 16px, 60px 8px;
+  background-repeat: repeat-x;
+  background-position: var(--rx, 50vw) 0, var(--rx, 50vw) 0;
+  pointer-events: none;
+}
+
+.needle {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 2px;
+  height: 16px;
+  margin-left: -1px;
+  border-radius: 0 0 1px 1px;
+  background: var(--red);
+  transform: translateX(var(--x, 50vw));
+  transition: transform .12s ease-out;   /* it clicks from tick to tick */
+  will-change: transform;
+}
+
+/* ---------- Header (text pages only) ---------- */
+
+.nav .wrap { display: flex; align-items: center; height: 64px; }
+.brand { display: inline-flex; align-items: center; gap: 8px; }
+.brand img { width: 24px; height: 24px; border-radius: 6px; box-shadow: 0 0 0 1px var(--hair); }
+
+/* ---------- Hero ---------- */
+
+.hero { text-align: center; padding-top: calc(var(--unit) * 6); }
+
+.icon {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto calc(var(--unit) * 3);
+  border-radius: 22.5%;
+  box-shadow: 0 0 0 1px var(--hair), 0 8px 24px -8px rgba(30, 24, 18, .3);
+}
+
+h1 {
+  font-size: var(--l);
+  line-height: var(--l-lh);
+  font-weight: 500;
+  letter-spacing: -.04em;
+  margin-left: -.04em;  /* optical centring of the D */
+}
+
+.tagline {
+  font-size: var(--m);
+  line-height: var(--m-lh);
+  font-weight: 400;
+  color: var(--ink2);
+  margin-top: calc(var(--unit) * 2);
+}
+
+/* The app's dark key (DialDarkPrimary, "+ Shot"): a warm graphite
+   gradient, a dark ring, and a faint halo around it. */
+.download {
+  display: inline-flex;
+  align-items: center;
+  height: 48px;
+  padding: 0 calc(var(--unit) * 3);
+  margin-top: calc(var(--unit) * 4);
+  border-radius: 24px;
+  color: #F7F5F1;
+  background: linear-gradient(#4A4643, #34312E);
+  box-shadow:
+    0 0 0 1px rgba(20, 18, 16, .55),
+    0 0 0 5px rgba(43, 38, 33, .05),
+    0 2px 6px rgba(43, 38, 33, .2);
+}
+.download:hover { background: linear-gradient(#57524F, #3E3A37); }
+.download:active {
+  background: linear-gradient(#34312E, #4A4643);
+  box-shadow:
+    0 0 0 1px rgba(20, 18, 16, .55),
+    0 0 0 5px rgba(43, 38, 33, .05),
+    0 1px 3px rgba(43, 38, 33, .08);
+}
+
+.fine { margin-top: calc(var(--unit) * 2); color: var(--ink2); font-weight: 400; text-wrap: balance; }
+
+/* ---------- The device ----------
+   The App Store screenshots' phone (style rams in the app repo's
+   compose.py), in units of the device's own width (cqw) so it scales: an
+   outer radius of 16 %, a pale titanium rim (twice the screenshots' 7 px on
+   980, which reads too thin at web size), a 12 px bezel, the inner radii
+   concentric with it. app.js swaps each circular corner for a continuous
+   (squircle) one; the shadow sits on .device as a filter so the clip keeps it. */
+
+.stage { margin-top: calc(var(--unit) * 6); }
+
+.device {
+  width: var(--phone);
+  margin: 0 auto;
+  container-type: inline-size;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  filter: drop-shadow(0 0 .5px rgba(43, 38, 33, .5)) drop-shadow(0 2px 4px rgba(30, 24, 18, .12)) drop-shadow(0 32px 48px rgba(30, 24, 18, .22));
+}
+
+.frame {
+  padding: 1.43cqw;                          /* 14 / 980 */
+  border-radius: 16cqw;
+  background: linear-gradient(145deg, #DCD9D4, #ACA8A2 45%, #D0CCC6 60%, #A09C96);   /* a shade deeper than the screenshots', to stand off the grey ground */
+}
+
+.bezel {
+  padding: 1.224cqw;                         /* 12 / 980 */
+  border-radius: 14.57cqw;                   /* 16 - 1.43 */
+  background: #141210;
+}
+
+.screen {
+  position: relative;
+  overflow: hidden;
+  border-radius: 13.346cqw;                  /* 14.57 - 1.224 */
+  aspect-ratio: 1320 / 2868;
+  background: #000;
+}
+.screen::before {                 /* the island: 29 % of the screen wide, 8.5 % tall, 2.8 % down */
+  content: "";
+  position: absolute;
+  z-index: 2;
+  top: 2.69cqw;
+  left: 50%;
+  width: 27.88cqw;
+  height: 8.17cqw;
+  border-radius: 999px;
+  transform: translateX(-50%);
+  background: #000;
+}
+.screen img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity .7s ease;
+}
+.screen img.on { opacity: 1; }
+
+/* ---------- What is on screen ----------
+   A title and a line under it; below, a dial says where the tour
+   is, between the two arrow keys. */
+
+.stage figcaption {
+  max-width: 440px;
+  margin: calc(var(--unit) * 4) auto 0;
+}
+.caption { transition: opacity .3s ease; }
+.caption.out { opacity: 0; }
+.caption .title { font-size: var(--m); line-height: var(--m-lh); }
+.caption .sub {
+  margin-top: 4px;
+  min-height: calc(var(--s-lh) * 3);
+  color: var(--ink2);
+  font-weight: 400;
+  text-wrap: balance;
+}
+
+.tour {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  margin-top: calc(var(--unit) * 3);
+}
+
+/* The app's light raised key (DialRaised), as a rounded square like
+   Log Shot's record key. */
+.step {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: linear-gradient(#FCFCFC, #EFEFEE);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, .9),
+    0 0 0 1px rgba(43, 38, 33, .07),
+    0 1px 2px rgba(43, 38, 33, .1);
+  -webkit-tap-highlight-color: transparent;
+}
+.step:hover { background: linear-gradient(#FFFFFF, #F4F4F3); }
+.step:active { background: linear-gradient(#EFEFEE, #FCFCFC); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .4), 0 0 0 1px rgba(43, 38, 33, .07); }
+.step svg { width: 16px; height: 16px; fill: none; stroke: var(--ink); stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+
+/* Log Shot's dial: an inset track, a major tick per screen with minor
+   ones between, and the ink needle on the one showing. Tap or drag it. */
+.track {
+  position: relative;
+  width: 216px;
+  height: 48px;
+  border-radius: 12px;
+  background: #E9E9E8;                       /* the app's track, without its warmth on this neutral ground */
+  box-shadow: inset 0 1px 1.5px rgba(43, 38, 33, .08), inset 0 0 0 1px rgba(43, 38, 33, .045);
+  cursor: pointer;
+  touch-action: none;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+}
+.track:focus-visible { box-shadow: inset 0 1px 1.5px rgba(43, 38, 33, .08), 0 0 0 2px rgba(43, 38, 33, .3); }
+.track i {
+  position: absolute;
+  top: 50%;
+  width: 1px;
+  height: 8px;
+  margin: -4px 0 0 -.5px;
+  background: rgba(43, 38, 33, .2);
+}
+.track i.major { height: 16px; margin-top: -8px; background: rgba(43, 38, 33, .35); }
+.track .mark {
+  position: absolute;
+  top: 50%;
+  left: var(--at, 24px);
+  width: 2px;
+  height: 24px;
+  margin: -12px 0 0 -1px;
+  border-radius: 1px;
+  background: var(--ink);
+  z-index: 1;
+  transition: left .35s cubic-bezier(.3, .7, .3, 1);
+}
+.track.dragging .mark { transition: none; }
+
+.still .screen img, .still .caption, .still .track .mark { transition: none; }
+@media (prefers-reduced-motion: reduce) {
+  .screen img, .caption, .track .mark, .needle { transition: none; }
+}
+
+/* ---------- Footer ---------- */
+
+.footer { margin-top: calc(var(--unit) * 16); }
+.footer .wrap > div {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 8px 24px;
+  padding: calc(var(--unit) * 3) 0 calc(var(--unit) * 5);
+  border-top: .5px solid rgba(43, 38, 33, .22);
+  color: var(--ink2);
+  font-weight: 400;
+}
+.footer nav { display: flex; flex-wrap: wrap; gap: 8px 24px; }
+.footer a:hover { color: var(--ink); }
+.footer span a { color: var(--ink); }
+
+/* ---------- Text pages (privacy, support) ---------- */
+
+.doc { padding: calc(var(--unit) * 6) 0 0; }
+.doc article { max-width: 640px; font-size: 17px; line-height: 28px; font-weight: 400; }
+.doc h1 { font-size: 48px; line-height: 48px; letter-spacing: -.03em; margin: 0 0 calc(var(--unit) * 2); }
+.doc .meta { color: var(--ink2); margin-bottom: calc(var(--unit) * 6); }
+.doc h2 { font-size: 17px; line-height: 28px; font-weight: 600; margin: calc(var(--unit) * 5) 0 calc(var(--unit) * 1); }
+.doc p, .doc ul { margin-bottom: calc(var(--unit) * 2); }
+.doc ul { padding-left: 1.1em; }
+.doc li { margin-bottom: 4px; }
+.doc strong { font-weight: 600; }
+.doc a { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; text-decoration-color: rgba(43, 38, 33, .35); }
+.doc a:hover { text-decoration-color: var(--ink); }
+
+/* ---------- Phones ---------- */
+
+@media (max-width: 760px) {
+  :root { --l: 64px; --l-lh: 60px; --m: 20px; --m-lh: 28px; --gutter: 20px; }
+  .hero { padding-top: calc(var(--unit) * 5); }
+  .icon { width: 72px; height: 72px; }
+  .doc h1 { font-size: 40px; line-height: 44px; }
+}

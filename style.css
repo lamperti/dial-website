@@ -96,7 +96,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   gap: 20px;
 }
 .iconwrap { display: block; flex: none; filter: drop-shadow(0 3px 6px rgba(30, 24, 18, .1)); }
-.iconring { display: block; padding: .5px; border-radius: 23%; background: rgba(43, 38, 33, .24); }
+.iconring { display: block; padding: .5px; border-radius: 23%; background: rgba(43, 38, 33, .19); }
 .icon {
   width: 72px;
   height: 72px;
@@ -281,13 +281,14 @@ h1 {
 .doc a:hover { text-decoration-color: var(--ink); }
 
 @media (max-width: 760px) {
-  :root { --l: 64px; --l-lh: 60px; --m: 18px; --m-lh: 24px; --gutter: 20px; }
+  :root { --l: 64px; --l-lh: 60px; --m: 17px; --m-lh: 24px; --gutter: 20px; }
   .tagline { margin-top: var(--unit); }
+  .download { margin-top: calc(var(--unit) * 5); }
   .hero { padding-top: calc(var(--unit) * 5); }
   .icon { width: 56px; height: 56px; }
   .lockup { gap: 14px; }
   .stage { margin: calc(var(--unit) * 5) -8px 0; column-gap: 8px; }
-  .device::before { box-shadow: 0 2px 6px rgba(30, 24, 18, .1), 0 16px 28px -10px rgba(30, 24, 18, .14); }
+  .device::before { box-shadow: 0 2px 6px rgba(30, 24, 18, .12), 0 24px 40px -8px rgba(30, 24, 18, .19); }
   .doc h1 { font-size: 40px; line-height: 44px; }
 }
 

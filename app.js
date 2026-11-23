@@ -22,24 +22,40 @@
 
   const layers = [...document.querySelectorAll('.frame, .bezel, .screen, .iconring, .icon')];
   if (layers.length) {
-    const STEPS = 20, E = 2 / 3.6;
-    const curve = [];
-    for (let k = 0; k <= STEPS; k++) {
-      const a = (k / STEPS) * Math.PI / 2;
-      curve.push([1 - Math.pow(Math.cos(a), E), 1 - Math.pow(Math.sin(a), E)]);
-    }
-    const f = (n) => `${n.toFixed(2)}px`;
+    const K = 1.52866483;
+    const corner = [
+      ['C', 1.08849323, 0, 0.86840689, 0.02101458, 0.66993427, 0.06549600],
+      ['L', 0.63149399, 0.07491176],
+      ['C', 0.37282392, 0.16905899, 0.16906001, 0.37282401, 0.07491100, 0.63149399],
+      ['C', 0.02101458, 0.86840689, 0, 1.08849323, 0, K],
+    ];
+    const f = (n) => n.toFixed(2);
     const smooth = () => layers.forEach((el) => {
       const w = el.offsetWidth, h = el.offsetHeight;
-      const r = parseFloat(getComputedStyle(el).borderTopLeftRadius);
-      if (!w || !h || !r) return;
-      const s = Math.min(r * 1.5, w / 2, h / 2);
-      const p = [];
-      curve.forEach(([u, v]) => p.push(`${f(u * s)} ${f(v * s)}`));
-      curve.forEach(([u, v]) => p.push(`${f(w - v * s)} ${f(u * s)}`));
-      curve.forEach(([u, v]) => p.push(`${f(w - u * s)} ${f(h - v * s)}`));
-      curve.forEach(([u, v]) => p.push(`${f(v * s)} ${f(h - u * s)}`));
-      el.style.clipPath = `polygon(${p.join(',')})`;
+      if (!w || !h) return;
+      if (!el.dataset.ratio) {
+        el.dataset.ratio = parseFloat(getComputedStyle(el).borderTopLeftRadius) / w || 0;
+        el.style.borderRadius = '0';
+      }
+      const r = Math.min(el.dataset.ratio * w, Math.min(w, h) / 2 / K);
+      if (!r) return;
+      const maps = [
+        (a, b) => [w - a * r, b * r],
+        (a, b) => [w - b * r, h - a * r],
+        (a, b) => [a * r, h - b * r],
+        (a, b) => [b * r, a * r],
+      ];
+      let d = `M${f(K * r)} 0`;
+      maps.forEach((m) => {
+        const [sx, sy] = m(K, 0);
+        d += `L${f(sx)} ${f(sy)}`;
+        corner.forEach(([op, ...n]) => {
+          const pts = [];
+          for (let i = 0; i < n.length; i += 2) pts.push(m(n[i], n[i + 1]).map(f).join(' '));
+          d += op + pts.join(' ');
+        });
+      });
+      el.style.clipPath = `path('${d}Z')`;
     });
     const ro = new ResizeObserver(smooth);
     layers.forEach((el) => ro.observe(el));

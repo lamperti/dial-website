@@ -103,19 +103,20 @@
   };
 
   const stop = () => clearInterval(timer);
-  const run = () => { stop(); timer = setInterval(() => show(current + 1), HOLD); };
+  const run = () => { stop(); if (auto) timer = setInterval(() => show(current + 1), HOLD); };
   const step = (d) => { show(current + d); run(); };
 
-  // ?slide=3 holds one screen still (for screenshots).
+  // ?slide=3 opens on one screen and holds it (for screenshots): no
+  // autoplay, no fades, but the keys and the dial still work.
   const pinned = new URLSearchParams(location.search).get('slide');
   if (pinned !== null) {
     document.documentElement.classList.add('still');
-    current = Number(pinned);
-    slides.forEach((s, k) => s.classList.toggle('on', k === current));
-    point();
+    slides[current].classList.remove('on');
+    current = Math.max(0, Math.min(slides.length - 1, Number(pinned) || 0));
+    slides[current].classList.add('on');
     write();
-    return;
   }
+  const auto = pinned === null;
 
   const stage = screen.closest('.stage');
   stage.querySelector('.prev').addEventListener('click', () => step(-1));

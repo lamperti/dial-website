@@ -274,8 +274,8 @@ h1 {
   width: 216px;
   height: 48px;
   border-radius: 12px;
-  background: #E9E9E8;                       /* the app's track, without its warmth on this neutral ground */
-  box-shadow: inset 0 1px 1.5px rgba(43, 38, 33, .08), inset 0 0 0 1px rgba(43, 38, 33, .045);
+  background: #EEEEED;                       /* the app's track, lighter and without its warmth on this ground */
+  box-shadow: inset 0 1px 1.5px rgba(43, 38, 33, .06), inset 0 0 0 1px rgba(43, 38, 33, .04);
   cursor: pointer;
   touch-action: none;
   outline: none;

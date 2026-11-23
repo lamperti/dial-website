@@ -310,6 +310,7 @@ h1 {
     column-gap: calc(var(--unit) * 11);
     max-width: calc(944px + 2 * var(--gutter));
   }
+  .intro { align-self: start; margin-top: calc(var(--phone) * .2955); }
   .lockup { justify-content: flex-start; }
   .stage { margin: 0; column-gap: 28px; }
   .label {

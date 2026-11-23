@@ -24,14 +24,20 @@
   <main>
     <section class="hero">
       <div class="wrap">
-        <img class="icon" src="/assets/icon.webp" alt="Dial's icon: a dial with a red dot" width="96" height="96">
-        <h1>Dial</h1>
-        <p class="tagline">Pull better espresso shots, faster.</p>
-        <a href="https://testflight.apple.com/join/yrKBnctM" class="download"><span>Download for iOS</span></a>
-        <p class="fine">Free. No account.</p>
+        <div class="intro">
+          <div class="lockup">
+            <img class="icon" src="/assets/icon.webp" alt="Dial's icon: a dial with a red dot" width="72" height="72">
+            <h1>Dial</h1>
+          </div>
+          <p class="tagline">Pull better espresso shots, faster.</p>
+          <a href="https://testflight.apple.com/join/yrKBnctM" class="download"><span>Download for iOS</span></a>
+          <p class="fine">Free. No account.</p>
+        </div>
         <figure class="stage">
-          <div class="device">
-            <div class="frame">
+          <button class="step prev" type="button" aria-label="Previous screen"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10 3.5 5.5 8l4.5 4.5"/></svg></button>
+          <div class="holder">
+            <div class="device">
+              <div class="frame">
               <div class="bezel"><div class="screen">
                 <img class="on" src="/assets/shelf.webp" alt="The shelf: all your bags of coffee, in their real colors" width="860" height="1869" data-title="All your bags at a glance." data-sub="Each one in its roaster's colors, with the grind that worked and whether you liked it.">
                 <img src="/assets/prep.webp" alt="The grind dial, set where Dial recommends" width="860" height="1869" data-title="Stop guessing the grind." data-sub="Dial works out the next setting from your past shots and how they tasted. A new bag starts from what the others taught it." loading="lazy">
@@ -42,18 +48,13 @@
                 <img src="/assets/bag.webp" alt="A bag's page with its shots" width="860" height="1869" data-title="Buy it again, skip the dial-in." data-sub="Each bag keeps how it was dialed in and the shots that got it there, so you don't waste one next time." loading="lazy">
               </div></div>
             </div>
-          </div>
-          <figcaption>
-            <div class="caption" aria-live="polite">
+            </div>
+            <figcaption class="label" aria-live="polite">
               <p class="title">All your bags at a glance.</p>
               <p class="sub">Each one in its roaster's colors, with the grind that worked and whether you liked it.</p>
-            </div>
-            <div class="tour">
-              <button class="step prev" type="button" aria-label="Previous screen"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10 3.5 5.5 8l4.5 4.5"/></svg></button>
-              <div class="track" role="slider" tabindex="0" aria-label="Screen" aria-valuemin="1" aria-valuemax="7" aria-valuenow="1"><span class="mark"></span></div>
-              <button class="step next" type="button" aria-label="Next screen"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3.5 10.5 8 6 12.5"/></svg></button>
-            </div>
-          </figcaption>
+            </figcaption>
+          </div>
+          <button class="step next" type="button" aria-label="Next screen"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3.5 10.5 8 6 12.5"/></svg></button>
         </figure>
       </div>
     </section>

@@ -47,31 +47,17 @@
 
   const screen = document.querySelector('.stage .screen');
   if (!screen) return;
+  const stage = screen.closest('.stage');
+  const device = stage.querySelector('.device');
+  const label = stage.querySelector('.label');
+  const title = label.querySelector('.title');
+  const sub = label.querySelector('.sub');
   const slides = [...screen.querySelectorAll('img')];
-  const track = document.querySelector('.stage .track');
-  const mark = track.querySelector('.mark');
-  const MINOR = 3;
-  const PAD = 24;
-  const caption = document.querySelector('.stage .caption');
-  const title = caption.querySelector('.title');
-  const sub = caption.querySelector('.sub');
   const HOLD = 6500;
+  const TUCK = 450;
   let current = 0;
   let timer = null;
-
-  const at = (k) => PAD + (k / (slides.length - 1)) * (track.clientWidth - 2 * PAD);
-  const steps = (slides.length - 1) * (MINOR + 1);
-  for (let j = 0; j <= steps; j++) {
-    const i = document.createElement('i');
-    if (j % (MINOR + 1) === 0) i.className = 'major';
-    i.style.left = `${PAD + (j / steps) * (track.clientWidth - 2 * PAD)}px`;
-    track.appendChild(i);
-  }
-  const point = () => {
-    mark.style.setProperty('--at', `${at(current)}px`);
-    track.setAttribute('aria-valuenow', current + 1);
-    track.setAttribute('aria-valuetext', slides[current].dataset.title);
-  };
+  let swap = null;
 
   const write = () => {
     title.textContent = slides[current].dataset.title;
@@ -83,58 +69,42 @@
     slides[current].classList.remove('on');
     current = next;
     slides[current].classList.add('on');
-    point();
-    caption.classList.add('out');
-    setTimeout(() => { write(); caption.classList.remove('out'); }, 300);
+    label.classList.remove('in');
+    clearTimeout(swap);
+    swap = setTimeout(() => { write(); label.classList.add('in'); }, TUCK);
   };
 
+  const pinned = new URLSearchParams(location.search).get('slide');
+  const auto = pinned === null;
   const stop = () => clearInterval(timer);
   const run = () => { stop(); if (auto) timer = setInterval(() => show(current + 1), HOLD); };
   const step = (d) => { show(current + d); run(); };
 
-  const pinned = new URLSearchParams(location.search).get('slide');
-  if (pinned !== null) {
+  if (!auto) {
     document.documentElement.classList.add('still');
     slides[current].classList.remove('on');
     current = Math.max(0, Math.min(slides.length - 1, Number(pinned) || 0));
     slides[current].classList.add('on');
     write();
+    label.classList.add('in');
+  } else {
+    setTimeout(() => label.classList.add('in'), 700);
   }
-  const auto = pinned === null;
 
-  const stage = screen.closest('.stage');
   stage.querySelector('.prev').addEventListener('click', () => step(-1));
   stage.querySelector('.next').addEventListener('click', () => step(1));
-  stage.querySelector('.device').addEventListener('click', () => step(1));
-  const nearest = (e) => {
-    const r = track.getBoundingClientRect();
-    const f = (e.clientX - r.left - PAD) / (r.width - 2 * PAD);
-    return Math.max(0, Math.min(slides.length - 1, Math.round(f * (slides.length - 1))));
-  };
-  track.addEventListener('pointerdown', (e) => {
-    track.setPointerCapture(e.pointerId);
-    track.classList.add('dragging');
-    stop();
-    show(nearest(e));
-  });
-  track.addEventListener('pointermove', (e) => {
-    if (track.hasPointerCapture(e.pointerId)) show(nearest(e));
-  });
-  const release = () => { track.classList.remove('dragging'); run(); };
-  track.addEventListener('pointerup', release);
-  track.addEventListener('pointercancel', release);
+  device.addEventListener('click', () => step(1));
   document.addEventListener('keydown', (e) => {
     if (e.metaKey || e.ctrlKey || e.altKey) return;
     if (e.key === 'ArrowLeft') step(-1);
     if (e.key === 'ArrowRight') step(1);
   });
-  [stage.querySelector('.device'), stage.querySelector('figcaption')].forEach((el) => {
+  [device, label].forEach((el) => {
     el.addEventListener('mouseenter', stop);
     el.addEventListener('mouseleave', run);
   });
   document.addEventListener('visibilitychange', () => {
     if (document.hidden) stop(); else run();
   });
-  point();
   run();
 })();

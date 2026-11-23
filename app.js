@@ -20,7 +20,7 @@
     place();
   }
 
-  const layers = [...document.querySelectorAll('.frame, .bezel, .screen')];
+  const layers = [...document.querySelectorAll('.frame, .bezel, .screen, .icon')];
   if (layers.length) {
     const STEPS = 20, E = 2 / 3.6;
     const curve = [];
@@ -41,7 +41,8 @@
       curve.forEach(([u, v]) => p.push(`${f(v * s)} ${f(h - u * s)}`));
       el.style.clipPath = `polygon(${p.join(',')})`;
     });
-    new ResizeObserver(smooth).observe(layers[0]);
+    const ro = new ResizeObserver(smooth);
+    layers.forEach((el) => ro.observe(el));
     smooth();
   }
 
@@ -94,6 +95,7 @@
   stage.querySelector('.prev').addEventListener('click', () => step(-1));
   stage.querySelector('.next').addEventListener('click', () => step(1));
   device.addEventListener('click', () => step(1));
+  label.addEventListener('click', () => step(1));
   document.addEventListener('keydown', (e) => {
     if (e.metaKey || e.ctrlKey || e.altKey) return;
     if (e.key === 'ArrowLeft') step(-1);

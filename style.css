@@ -223,13 +223,13 @@ h1 {
   padding: 40px 20px 16px;
   border-radius: 14px;
   background: linear-gradient(#FCFCFC, #F1F1F0);
-  box-shadow: 0 0 0 .5px rgba(43, 38, 33, .16), 0 10px 24px -12px rgba(30, 24, 18, .3);
+  box-shadow: 0 0 0 .5px rgba(43, 38, 33, .14), 0 8px 20px -12px rgba(30, 24, 18, .16);
   transform: translateY(calc(-100% + 24px));
   transition: transform .5s cubic-bezier(.3, .8, .25, 1);
 }
 .label.in { transform: none; }
-.label .title { font-size: 17px; line-height: 24px; }
-.label .sub { margin-top: 4px; color: var(--ink2); font-weight: 400; text-wrap: pretty; }
+.label .title { font-size: 15px; line-height: 20px; }
+.label .sub { margin-top: 4px; font-size: 13px; line-height: 18px; color: var(--ink2); font-weight: 400; text-wrap: pretty; }
 
 .step {
   display: grid;
@@ -237,13 +237,13 @@ h1 {
   width: 32px;
   height: 32px;
   border-radius: 10px;
-  color: var(--ink2);
+  color: rgba(43, 38, 33, .38);
   -webkit-tap-highlight-color: transparent;
   transition: background .15s ease, color .15s ease;
 }
-.step:hover { background: rgba(43, 38, 33, .06); color: var(--ink); }
+.step:hover { background: rgba(43, 38, 33, .05); color: var(--ink2); }
 .step:active { background: rgba(43, 38, 33, .1); }
-.step svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+.step svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.25; stroke-linecap: round; stroke-linejoin: round; }
 
 .still .screen img, .still .label { transition: none; }
 @media (prefers-reduced-motion: reduce) {
@@ -258,7 +258,7 @@ h1 {
   justify-content: space-between;
   gap: 8px 24px;
   padding: calc(var(--unit) * 3) 0 calc(var(--unit) * 5);
-  border-top: .5px solid rgba(43, 38, 33, .12);
+  border-top: .5px solid rgba(43, 38, 33, .07);
   color: var(--ink2);
   font-weight: 400;
 }
@@ -298,7 +298,7 @@ h1 {
     grid-template-columns: minmax(0, 1fr) auto;
     align-items: center;
     column-gap: calc(var(--unit) * 8);
-    max-width: calc(1040px + 2 * var(--gutter));
+    max-width: calc(880px + 2 * var(--gutter));
   }
   .lockup { justify-content: flex-start; }
   .stage { margin: 0; column-gap: 16px; }
@@ -307,8 +307,8 @@ h1 {
     right: calc(100% - 24px);
     top: auto;
     bottom: 14%;
-    width: 272px;
-    padding: 16px 44px 16px 20px;
+    width: 248px;
+    padding: 14px 40px 16px 16px;
     transform: translateX(calc(100% - 24px));
   }
   .label.in { transform: none; }

@@ -75,6 +75,7 @@
   let current = 0;
   let timer = null;
   let swap = null;
+  let settle = null;
 
   const write = () => {
     title.textContent = slides[current].dataset.title;
@@ -87,7 +88,12 @@
     label.classList.remove('in');
     clearTimeout(swap);
     swap = setTimeout(() => {
-      slides.forEach((img, i) => img.classList.toggle('on', i === current));
+      slides.forEach((img, i) => {
+        img.classList.toggle('was', img.classList.contains('on') && i !== current);
+        img.classList.toggle('on', i === current);
+      });
+      clearTimeout(settle);
+      settle = setTimeout(() => slides.forEach((img) => img.classList.remove('was')), 520);
       write();
       label.classList.add('in');
     }, TUCK);

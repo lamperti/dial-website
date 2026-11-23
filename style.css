@@ -213,7 +213,8 @@ h1 {
   opacity: 0;
   transition: opacity .5s ease;
 }
-.screen img.on { opacity: 1; }
+.screen img.was { opacity: 1; transition: none; }
+.screen img.on { opacity: 1; z-index: 1; }
 
 .label {
   position: absolute;
@@ -224,7 +225,7 @@ h1 {
   padding: 40px 20px 16px;
   border-radius: 14px;
   background: linear-gradient(#FAFAFA, #F3F3F2);
-  box-shadow: 0 0 0 .5px rgba(43, 38, 33, .14), 0 6px 16px -12px rgba(30, 24, 18, .12);
+  box-shadow: 0 0 0 .5px rgba(43, 38, 33, .14), 0 8px 20px -12px rgba(30, 24, 18, .16);
   transform: translateY(calc(-100% + 24px));
   transition: transform .5s cubic-bezier(.3, .8, .25, 1);
 }

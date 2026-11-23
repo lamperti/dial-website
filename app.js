@@ -20,7 +20,7 @@
     place();
   }
 
-  const layers = [...document.querySelectorAll('.frame, .bezel, .screen, .icon')];
+  const layers = [...document.querySelectorAll('.frame, .bezel, .screen, .iconring, .icon')];
   if (layers.length) {
     const STEPS = 20, E = 2 / 3.6;
     const curve = [];

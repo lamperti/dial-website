@@ -211,7 +211,7 @@ h1 {
   height: 100%;
   object-fit: cover;
   opacity: 0;
-  transition: opacity .7s ease;
+  transition: opacity .5s ease;
 }
 .screen img.on { opacity: 1; }
 

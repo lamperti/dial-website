@@ -83,12 +83,14 @@
   const show = (i) => {
     const next = (i + slides.length) % slides.length;
     if (next === current) return;
-    slides[current].classList.remove('on');
     current = next;
-    slides[current].classList.add('on');
     label.classList.remove('in');
     clearTimeout(swap);
-    swap = setTimeout(() => { write(); label.classList.add('in'); }, TUCK);
+    swap = setTimeout(() => {
+      slides.forEach((img, i) => img.classList.toggle('on', i === current));
+      write();
+      label.classList.add('in');
+    }, TUCK);
   };
 
   const pinned = new URLSearchParams(location.search).get('slide');

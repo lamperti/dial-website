@@ -288,7 +288,15 @@ h1 {
   .hero { padding-top: calc(var(--unit) * 5); }
   .icon { width: 56px; height: 56px; }
   .lockup { gap: 14px; }
-  .stage { margin: calc(var(--unit) * 5) -8px 0; column-gap: 8px; }
+  :root { --phone: min(100vw - 130px, 342px, calc((100vh - 120px) * .47)); }
+  @supports (height: 100svh) {
+    :root { --phone: min(100vw - 130px, 342px, calc((100svh - 120px) * .47)); }
+  }
+  .stage { grid-template-columns: 44px auto 44px; margin: calc(var(--unit) * 5) -8px 0; column-gap: 4px; }
+  .step { width: 44px; height: 44px; border-radius: 12px; color: rgba(43, 38, 33, .45); }
+  .step svg { width: 22px; height: 22px; stroke-width: 1.5; }
+  .footer .wrap > div { flex-direction: column; align-items: center; text-align: center; gap: 12px; }
+  .footer nav { justify-content: center; }
   .device::before { box-shadow: 0 2px 6px rgba(30, 24, 18, .12), 0 24px 40px -8px rgba(30, 24, 18, .19); }
   .doc h1 { font-size: 40px; line-height: 44px; }
 }

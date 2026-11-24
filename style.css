@@ -233,6 +233,8 @@ h1 {
 .label { cursor: pointer; -webkit-tap-highlight-color: transparent; }
 .label .title { font-size: 15px; line-height: 20px; }
 .label .sub { margin-top: 4px; font-size: 13px; line-height: 18px; color: var(--ink2); font-weight: 400; text-wrap: pretty; }
+.label .title, .label .sub { transition: opacity .15s ease; }
+.label.fade .title, .label.fade .sub { opacity: 0; }
 
 .step {
   display: grid;

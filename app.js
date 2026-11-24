@@ -72,6 +72,7 @@
   const slides = [...screen.querySelectorAll('img')];
   const HOLD = 6500;
   const TUCK = 450;
+  const FADE = 150;
   let current = 0;
   let timer = null;
   let swap = null;
@@ -81,29 +82,37 @@
     title.textContent = slides[current].dataset.title;
     sub.textContent = slides[current].dataset.sub;
   };
-  const show = (i) => {
+  const swapIn = () => {
+    slides.forEach((img, i) => {
+      img.classList.toggle('was', img.classList.contains('on') && i !== current);
+      img.classList.toggle('on', i === current);
+    });
+    clearTimeout(settle);
+    settle = setTimeout(() => slides.forEach((img) => img.classList.remove('was')), 520);
+    write();
+    label.classList.remove('fade');
+  };
+  // Autoplay tucks the label behind the phone and slides it back out;
+  // a tap keeps it out and only fades the words, so browsing stays quick.
+  const show = (i, quick) => {
     const next = (i + slides.length) % slides.length;
     if (next === current) return;
     current = next;
-    label.classList.remove('in');
     clearTimeout(swap);
-    swap = setTimeout(() => {
-      slides.forEach((img, i) => {
-        img.classList.toggle('was', img.classList.contains('on') && i !== current);
-        img.classList.toggle('on', i === current);
-      });
-      clearTimeout(settle);
-      settle = setTimeout(() => slides.forEach((img) => img.classList.remove('was')), 520);
-      write();
-      label.classList.add('in');
-    }, TUCK);
+    if (quick && label.classList.contains('in')) {
+      label.classList.add('fade');
+      swap = setTimeout(swapIn, FADE);
+    } else {
+      label.classList.remove('in');
+      swap = setTimeout(() => { swapIn(); label.classList.add('in'); }, TUCK);
+    }
   };
 
   const pinned = new URLSearchParams(location.search).get('slide');
   const auto = pinned === null;
   const stop = () => clearInterval(timer);
   const run = () => { stop(); if (auto) timer = setInterval(() => show(current + 1), HOLD); };
-  const step = (d) => { show(current + d); run(); };
+  const step = (d) => { show(current + d, true); run(); };
 
   if (!auto) {
     document.documentElement.classList.add('still');
